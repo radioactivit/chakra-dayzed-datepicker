@@ -237,7 +237,7 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
                 }
               }}
               onClick={(e) => {
-                if (e.key === ' ' && !isOpen) {
+                if (!isOpen) {
                   e.preventDefault();
                   onOpen();
                 }
