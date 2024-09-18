@@ -187,6 +187,7 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
   };
 
   // eventually we want to allow user to freely type their own input and parse the input
+
   let intVal = selectedDates[0]
     ? `${format(selectedDates[0], datepickerConfigs.dateFormat)}`
     : `${datepickerConfigs.dateFormat}`;
@@ -194,6 +195,9 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
     ? ` - ${format(selectedDates[1], datepickerConfigs.dateFormat)}`
     : ` - ${datepickerConfigs.dateFormat}`;
 
+  if (propsConfigs?.inputProps.placeHolder && !selectedDates.length) {
+    intVal = propsConfigs?.inputProps.placeHolder;
+  }
   const PopoverContentWrapper = usePortal ? Portal : React.Fragment;
 
   return (
@@ -227,6 +231,12 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
             <Input
               id={id}
               onKeyPress={(e) => {
+                if (e.key === ' ' && !isOpen) {
+                  e.preventDefault();
+                  onOpen();
+                }
+              }}
+              onClick={(e) => {
                 if (e.key === ' ' && !isOpen) {
                   e.preventDefault();
                   onOpen();
