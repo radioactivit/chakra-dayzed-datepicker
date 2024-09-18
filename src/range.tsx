@@ -196,7 +196,7 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
     : ` - ${datepickerConfigs.dateFormat}`;
 
   if (propsConfigs?.inputProps?.placeHolder && !selectedDates.length) {
-    intVal = propsConfigs?.inputProps.placeHolder;
+    intVal = propsConfigs?.inputProps?.placeHolder;
   }
   const PopoverContentWrapper = usePortal ? Portal : React.Fragment;
 
