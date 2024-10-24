@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Props as DayzedHookProps } from 'dayzed';
-import { Month_Names_Short, Weekday_Names_Short } from './utils/calanderUtils';
 import { CalendarUtils } from './utils/calendarUtils';
 import {
   Button,
@@ -27,6 +26,7 @@ import { enUS } from 'date-fns/locale';
 import FocusLock from 'react-focus-lock';
 import { VariantProps } from './single';
 import { CalendarIcon } from './components/calendarIcon';
+import { CloseIcon } from '@chakra-ui/icons';
 
 interface RangeCalendarPanelProps {
   dayzedHookProps: DayzedHookProps;
@@ -105,8 +105,6 @@ export type RangeDatepickerProps = RangeProps & VariantProps;
 
 const DefaultConfigs: Required<DatepickerConfigs> = {
   dateFormat: 'MM/dd/yyyy',
-  monthNames: Month_Names_Short,
-  dayNames: Weekday_Names_Short,
   monthNames: CalendarUtils.getMonthNamesShort(enUS),
   dayNames: CalendarUtils.getWeekdayNamesShort(enUS),
   firstDayOfWeek: 0,
@@ -163,6 +161,10 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
     if (!configs?.dayNames)
       datepickerConfigs.dayNames = CalendarUtils.getWeekdayNamesShort(locale);
   }
+
+  const onResetInput = () => {
+    onDateChange([]);
+  };
 
   const onPopoverClose = () => {
     onClose();
@@ -255,6 +257,23 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
               {...propsConfigs?.inputProps}
             />
           </PopoverAnchor>
+          <Button
+            position="absolute"
+            variant={'solid'}
+            outline={'none'}
+            right="0"
+            size="xs"
+            marginRight="40px"
+            zIndex={1}
+            type="button"
+            disabled={disabled}
+            _focus={{ boxShadow: 'none' }}
+            padding={'8px'}
+            onClick={onResetInput}
+            {...propsConfigs?.triggerIconBtnProps}
+          >
+            <CloseIcon color={'red'} />
+          </Button>
           <PopoverTrigger>
             <Button
               position="absolute"

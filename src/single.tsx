@@ -21,7 +21,6 @@ import {
 } from '@chakra-ui/react';
 import { format, parse, startOfDay } from 'date-fns';
 import FocusLock from 'react-focus-lock';
-import { Month_Names_Short, Weekday_Names_Short } from './utils/calanderUtils';
 import { CalendarUtils } from './utils/calendarUtils';
 import { CalendarPanel } from './components/calendarPanel';
 import {
@@ -32,6 +31,7 @@ import {
 } from './utils/commonTypes';
 import { CalendarIcon } from './components/calendarIcon';
 import { enUS } from 'date-fns/locale';
+import { CloseIcon } from '@chakra-ui/icons';
 
 interface SingleProps extends DatepickerProps {
   date?: Date;
@@ -70,8 +70,6 @@ export type SingleDatepickerProps = SingleProps & VariantProps;
 
 const DefaultConfigs: Required<DatepickerConfigs> = {
   dateFormat: 'yyyy-MM-dd',
-  monthNames: Month_Names_Short,
-  dayNames: Weekday_Names_Short,
   monthNames: CalendarUtils.getMonthNamesShort(enUS),
   dayNames: CalendarUtils.getWeekdayNamesShort(enUS),
   firstDayOfWeek: 0,
@@ -93,6 +91,7 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
   defaultIsOpen = false,
   closeOnSelect = true,
   children,
+  locale,
   ...restProps
 }) => {
   const [dateInView, setDateInView] = useState(selectedDate);
@@ -124,6 +123,10 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
   const [tempInput, setInputVal] = useState(
     selectedDate ? format(selectedDate, datepickerConfigs.dateFormat) : ''
   );
+
+  const onResetInput = () => {
+    setInputVal('');
+  };
 
   const onPopoverClose = () => {
     onClose();
@@ -230,6 +233,23 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
               {...restProps.propsConfigs?.inputProps}
             />
           </PopoverAnchor>
+          <Button
+            position="absolute"
+            variant={'solid'}
+            outline={'none'}
+            right="0"
+            size="xs"
+            marginRight="40px"
+            zIndex={1}
+            type="button"
+            disabled={disabled}
+            _focus={{ boxShadow: 'none' }}
+            padding={'8px'}
+            onClick={onResetInput}
+            {...restProps.propsConfigs?.triggerIconBtnProps}
+          >
+            <CloseIcon color={'red'}/>
+          </Button>
           <PopoverTrigger>
             <Button
               position="absolute"
