@@ -229,13 +229,13 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
               name={name}
               value={tempInput}
               onChange={handleInputChange}
-              paddingRight={'2.5rem'}
+              paddingRight={'4.5rem'}
               {...restProps.propsConfigs?.inputProps}
             />
           </PopoverAnchor>
           <Button
             position="absolute"
-            variant={'solid'}
+            variant={'ghost'}
             outline={'none'}
             right="0"
             size="xs"
