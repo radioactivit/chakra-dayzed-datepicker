@@ -44,6 +44,7 @@ import {
 } from '../src';
 import GitHubButton from 'react-github-btn';
 import { subDays, addDays, startOfDay, format } from 'date-fns';
+import { es, fr } from 'date-fns/locale';
 
 type FirstDayOfWeek = DatepickerConfigs['firstDayOfWeek'];
 const offsets: FirstDayOfWeek[] = [0, 1, 2, 3, 4, 5, 6];
@@ -203,6 +204,7 @@ const App = () => {
                       maxDate={addDays(demoDate, 8)}
                       onDateChange={setDate}
                       closeOnSelect={isSingleChecked}
+                      locale={es}
                     />
                   </Flex>
                 </Section>
@@ -232,6 +234,7 @@ const App = () => {
                       selectedDates={selectedDates}
                       onDateChange={setSelectedDates}
                       closeOnSelect={isRangeChecked}
+                      locale={fr}
                     />
                   </Flex>
                   <Flex gap="1rem" alignItems="center">
@@ -242,6 +245,7 @@ const App = () => {
                       selectedDates={selectedDates}
                       onDateChange={setSelectedDates}
                       closeOnSelect={isRangeChecked}
+                      locale={es}
                     />
                   </Flex>
                 </Section>

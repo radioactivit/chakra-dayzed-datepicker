@@ -22,6 +22,7 @@ import {
 import { format, parse, startOfDay } from 'date-fns';
 import FocusLock from 'react-focus-lock';
 import { Month_Names_Short, Weekday_Names_Short } from './utils/calanderUtils';
+import { CalendarUtils } from './utils/calendarUtils';
 import { CalendarPanel } from './components/calendarPanel';
 import {
   DatepickerConfigs,
@@ -30,6 +31,7 @@ import {
   PropsConfigs,
 } from './utils/commonTypes';
 import { CalendarIcon } from './components/calendarIcon';
+import { enUS } from 'date-fns/locale';
 
 interface SingleProps extends DatepickerProps {
   date?: Date;
@@ -47,6 +49,7 @@ interface SingleProps extends DatepickerProps {
   name?: string;
   usePortal?: boolean;
   portalRef?: React.MutableRefObject<null>;
+  locale?: Locale;
 }
 
 export type VariantProps =
@@ -69,6 +72,8 @@ const DefaultConfigs: Required<DatepickerConfigs> = {
   dateFormat: 'yyyy-MM-dd',
   monthNames: Month_Names_Short,
   dayNames: Weekday_Names_Short,
+  monthNames: CalendarUtils.getMonthNamesShort(enUS),
+  dayNames: CalendarUtils.getWeekdayNamesShort(enUS),
   firstDayOfWeek: 0,
   monthsToDisplay: 1,
 };
@@ -108,6 +113,13 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
     }),
     [configs]
   );
+
+  if (locale) {
+    if (!configs?.monthNames)
+      datepickerConfigs.monthNames = CalendarUtils.getMonthNamesShort(locale);
+    if (!configs?.dayNames)
+      datepickerConfigs.dayNames = CalendarUtils.getWeekdayNamesShort(locale);
+  }
 
   const [tempInput, setInputVal] = useState(
     selectedDate ? format(selectedDate, datepickerConfigs.dateFormat) : ''

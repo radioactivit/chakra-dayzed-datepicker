@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Props as DayzedHookProps } from 'dayzed';
 import { Month_Names_Short, Weekday_Names_Short } from './utils/calanderUtils';
+import { CalendarUtils } from './utils/calendarUtils';
 import {
   Button,
   Flex,
@@ -22,6 +23,7 @@ import {
   PropsConfigs,
 } from './utils/commonTypes';
 import { format } from 'date-fns';
+import { enUS } from 'date-fns/locale';
 import FocusLock from 'react-focus-lock';
 import { VariantProps } from './single';
 import { CalendarIcon } from './components/calendarIcon';
@@ -96,6 +98,7 @@ interface RangeProps extends DatepickerProps {
   name?: string;
   usePortal?: boolean;
   portalRef?: React.MutableRefObject<null>;
+  locale?: Locale;
 }
 
 export type RangeDatepickerProps = RangeProps & VariantProps;
@@ -104,6 +107,8 @@ const DefaultConfigs: Required<DatepickerConfigs> = {
   dateFormat: 'MM/dd/yyyy',
   monthNames: Month_Names_Short,
   dayNames: Weekday_Names_Short,
+  monthNames: CalendarUtils.getMonthNamesShort(enUS),
+  dayNames: CalendarUtils.getWeekdayNamesShort(enUS),
   firstDayOfWeek: 0,
   monthsToDisplay: 2,
 };
@@ -132,6 +137,7 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
     disabled,
     children,
     triggerVariant,
+    locale,
   } = mergedProps;
 
   // chakra popover utils
@@ -145,11 +151,18 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
     ) : (
       <CalendarIcon />
     );
-
+    
   const datepickerConfigs = {
     ...DefaultConfigs,
     ...configs,
   };
+  
+  if (locale) {
+    if (!configs?.monthNames)
+      datepickerConfigs.monthNames = CalendarUtils.getMonthNamesShort(locale);
+    if (!configs?.dayNames)
+      datepickerConfigs.dayNames = CalendarUtils.getWeekdayNamesShort(locale);
+  }
 
   const onPopoverClose = () => {
     onClose();
