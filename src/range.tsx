@@ -259,7 +259,9 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
               }}
               autoComplete="off"
               width={'16rem'}
-              paddingRight={'4.5rem'}
+              paddingRight={
+                selectedDates && selectedDates.length > 0 ? '4.5rem' : '2.5rem'
+              }
               isDisabled={disabled}
               name={name}
               value={intVal}
@@ -268,7 +270,7 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
             />
           </PopoverAnchor>
 
-          {selectedDates && selectedDates.length && (
+          {selectedDates && selectedDates.length > 0 && (
             <Button
               position="absolute"
               variant={'ghost'}

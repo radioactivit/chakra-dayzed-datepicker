@@ -229,27 +229,31 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
               name={name}
               value={tempInput}
               onChange={handleInputChange}
-              paddingRight={'4.5rem'}
+              paddingRight={tempInput !== '' ? '4.5rem' : '2.5rem'}
               {...restProps.propsConfigs?.inputProps}
             />
           </PopoverAnchor>
-          <Button
-            position="absolute"
-            variant={'ghost'}
-            outline={'none'}
-            right="0"
-            size="xs"
-            marginRight="40px"
-            zIndex={1}
-            type="button"
-            disabled={disabled}
-            _focus={{ boxShadow: 'none' }}
-            padding={'8px'}
-            onClick={onResetInput}
-            {...restProps.propsConfigs?.triggerIconBtnProps}
-          >
-            <CloseIcon color={'red'}/>
-          </Button>
+
+          {tempInput !== '' && (
+            <Button
+              position="absolute"
+              variant={'ghost'}
+              outline={'none'}
+              right="0"
+              size="xs"
+              marginRight="40px"
+              zIndex={1}
+              type="button"
+              disabled={disabled}
+              _focus={{ boxShadow: 'none' }}
+              padding={'8px'}
+              onClick={onResetInput}
+              {...restProps.propsConfigs?.triggerIconBtnProps}
+            >
+              <CloseIcon color={'red'} />
+            </Button>
+          )}
+
           <PopoverTrigger>
             <Button
               position="absolute"
