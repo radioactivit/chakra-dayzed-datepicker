@@ -149,12 +149,12 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
     ) : (
       <CalendarIcon />
     );
-    
+
   const datepickerConfigs = {
     ...DefaultConfigs,
     ...configs,
   };
-  
+
   if (locale) {
     if (!configs?.monthNames)
       datepickerConfigs.monthNames = CalendarUtils.getMonthNamesShort(locale);
@@ -267,23 +267,26 @@ export const RangeDatepicker: React.FC<RangeDatepickerProps> = (props) => {
               {...propsConfigs?.inputProps}
             />
           </PopoverAnchor>
-          <Button
-            position="absolute"
-            variant={'ghost'}
-            outline={'none'}
-            right="0"
-            size="xs"
-            marginRight="40px"
-            zIndex={1}
-            type="button"
-            disabled={disabled}
-            _focus={{ boxShadow: 'none' }}
-            padding={'8px'}
-            onClick={onResetInput}
-            {...propsConfigs?.triggerIconBtnProps}
-          >
-            <CloseIcon color={'red'} />
-          </Button>
+
+          {selectedDates && selectedDates.length && (
+            <Button
+              position="absolute"
+              variant={'ghost'}
+              outline={'none'}
+              right="0"
+              size="xs"
+              marginRight="40px"
+              zIndex={1}
+              type="button"
+              disabled={disabled}
+              _focus={{ boxShadow: 'none' }}
+              padding={'8px'}
+              onClick={onResetInput}
+              {...propsConfigs?.triggerIconBtnProps}
+            >
+              <CloseIcon color={'red'} />
+            </Button>
+          )}
           <PopoverTrigger>
             <Button
               position="absolute"
